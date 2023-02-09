@@ -1,0 +1,57 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" >
+  <div class="container-fluid" >
+      <div>      <a  class="navbar-brand" href=""><img style="padding-left: 20px" width="60" height="40" src="data:image/png;base64,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" alt=".."></a>
+</div>
+    <a class="navbar-brand" href="#">Google Play</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" style="padding-left: 20px">
+          <a class="nav-link active" aria-current="page" href="#">Games</a>
+        </li>
+          <li class="nav-item" style="padding-left: 20px">
+          <a class="nav-link active" aria-current="page" href="#">Messengers</a>
+        </li>
+          <li class="nav-item " style="padding-left: 20px">
+          <a class="nav-link active" aria-current="page" href="#">Apps</a>
+        </li>
+      </ul>
+        <div class="btn-group" role="group" style="padding-right: 20px">
+    <a   data-bs-toggle="dropdown" aria-expanded="false">
+        <img width="40" height="40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD8se4xudSNJIR8v62w4GvgWp6rIViuj-dLQ&usqp=CAU" alt="">
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Login</a></li>
+      <li><a class="dropdown-item" href="#">Register</a></li>
+    </ul>
+  </div>
+      <form style="padding-right: 30px"  class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+
+    </div>
+  </div>
+</nav>
+<div class="container">
+    {% block root %}{% endblock %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
