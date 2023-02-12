@@ -6,7 +6,7 @@ class League(models.Model):
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-# wedfg
+
 
 class Club(models.Model):
     name = models.CharField(max_length=50)
@@ -45,8 +45,8 @@ class Game(models.Model):
 
 
 class Betting(models.Model):
-    game = models.ForeignKey(Game,  null=True, on_delete=models.SET_NULL)
-    club = models.ForeignKey(Club, null=True,  on_delete=models.SET_NULL)
+    game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
+    club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
     draw = models.BooleanField(default=False, blank=True)
     money = models.PositiveIntegerField(blank=True)
     url = models.SlugField(max_length=160, unique=True)
