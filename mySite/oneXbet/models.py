@@ -6,7 +6,7 @@ class League(models.Model):
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+# wedfg
 
 class Club(models.Model):
     name = models.CharField(max_length=50)
