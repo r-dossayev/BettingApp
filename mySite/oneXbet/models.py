@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -47,6 +48,7 @@ class Game(models.Model):
 class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     draw = models.BooleanField(default=False, blank=True)
     money = models.PositiveIntegerField(blank=True)
     url = models.SlugField(max_length=160, unique=True)
