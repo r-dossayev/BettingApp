@@ -1,12 +1,21 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class League(models.Model):
     name = models.CharField(max_length=50)
+    poster = models.ImageField(upload_to="leaguesImages/", null=True)
+    country = models.CharField(max_length=100, null=True)
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('league', kwargs={'slug': self.url})
+
+    def __str__(self):
+        return self.name
 
 
 class Club(models.Model):
@@ -51,7 +60,7 @@ class Game(models.Model):
 class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     draw = models.BooleanField(default=False, blank=True)
     money = models.PositiveIntegerField(blank=True)
     url = models.SlugField(max_length=160, unique=True)

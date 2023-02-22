@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'oneXbet/css/style.css' %}">
     <!-- Responsive-->
     <link rel="stylesheet" href="{% static 'oneXbet/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'oneXbet/cardLeagues/style.css' %}">
     <!-- fevicon -->
     <link rel="icon" href="{% static 'oneXbet/images/fevicon.png' %}" type="image/gif"/>
     <!-- Scrollbar Custom CSS -->
@@ -69,13 +70,13 @@
                                         <a class="nav-link" href="{% url 'home' %}"> About Us </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">APL</a>
+                                        <a class="nav-link" href="{% url 'football' %}">Football</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">LA LIGA</a>
+                                        <a class="nav-link" href="#">Basketball</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">BUNDESLIGA</a>
+                                        <a class="nav-link" href="#">Hockey</a>
                                     </li>
                                 </ul>{% if  user.is_authenticated %}
                                 <div class="sign_btn"><a href="{% url 'logout' %}">LOGOUT</a></div>

@@ -1,16 +1,44 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# def hash_md5_func(text):
+#     import hashlib
+#     textUtf8 = text.encode("utf-8")
+#     hash_object = hashlib.md5(textUtf8)
+#     hash_text = hash_object.hexdigest()
+#
+#     return hash_text
+#
+#
+# def hash_sha1_func(text):
+#     import hashlib
+#     textUtf8 = text.encode("utf-8")
+#     hash_object = hashlib.sha1(textUtf8)
+#     hash_text = hash_object.hexdigest()
+#
+#     return hash_text
+#
+#
+# import hashlib
+#
+#
+# def ripemd160(data):
+#     return hashlib.new("ripemd160", data)
+#
+#
+# def hash160(data, hash=hashlib.sha256):
+#     try:
+#         if hash.ripe_hash:
+#             return ripemd160(hash.ripe_hash(data).digest()).digest()
+#         else:
+#             return ripemd160(hash(data).digest()).digest()
+#     except AttributeError:
+#         return ripemd160(hash(data).digest()).digest()
+#
+#
+# print(hash("qwertyu"))
+#
+# import zlib
+#
+# s = b'Xewirovanie'
+# # using zlib.crc32() method
+# t = zlib.crc32(s)
+#
+# print(t)

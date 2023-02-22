@@ -2,12 +2,13 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseNotFound
+# from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from oneXbet.forms import RegisterUserForm
+from oneXbet.models import League
 
 
 # Create your views here.
@@ -16,16 +17,22 @@ def handler404(request, exception):
     return render(request, '404page.html', status=404)
 
 
-def handler500(request, exception):
-    return render(request, template_name='404page.html', status=500)
+def handler500(exception):
+    return redirect(handler404)
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-# def login(request):
-#     return render(request, 'login.html')
+def football(request):
+    context = {"leagues": League.objects.all()}
+    return render(request, template_name="oneXbet/football.html", context=context)
+
+
+def league(request, slug):
+    context = {'league': League.objects.get(url=slug)}
+    return render(request, 'oneXbet/league.html', context)
 
 
 class RegisterUser(CreateView):

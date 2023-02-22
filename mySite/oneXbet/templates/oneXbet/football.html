@@ -1,0 +1,41 @@
+{% extends 'oneXbet/layouts/layout.html' %}
+{% block root %}
+{% if leagues %}
+    {% for league in leagues %}
+        <div class="wrapper">
+            <div class="main_card">
+                <div class="card_left">
+                    <div class="card_datails">
+                        <h1>{{ league.name }}</h1>
+                        <div class="card_cat">
+                            <p class="PG">{{ league.country }}</p>
+                            <p class="year">{{ league.created_at.date }}</p>
+                            <p class="time">{{ league.updated_at.hour }}</p>
+                        </div>
+                        <p class="disc">Ethan Hunt and his IMF team, along with some familiar allies, race against time
+                            after a mission gone wrong.</p>
+                        <a href="#" target="_blank">Read More {{ league.url }}</a>
+                        <div class="social-btn">
+                            <!-- WATCH TRAILER-->
+                            <a href="{{ league.get_absolute_url}}">
+                               show
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_right">
+                    <div class="img_container">
+                        <img src="{{ league.poster.url }}" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+    <!-- FOLLOW -->
+
+{% endblock %}
