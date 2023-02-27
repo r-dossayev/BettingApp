@@ -1,6 +1,22 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+import datetime
+
+
+class SoftDeleteModel(models.Model):
+    is_deleted = models.BooleanField(default=False)
+
+    def soft_delete(self):
+        self.is_deleted = True
+        self.save()
+
+    def restore(self):
+        self.is_deleted = False
+        self.save()
+
+    class Meta:
+        abstract = True
 
 
 class League(models.Model):
@@ -22,7 +38,11 @@ class Club(models.Model):
     name = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     description = models.TextField('description')
-    poster = models.ImageField(upload_to="clubsPoster/", null=True)
+    poster = models.ImageField(upload_to="clubsPoster/", null=True, blank=True)
+    point = models.PositiveSmallIntegerField(default=0)
+    wins = models.PositiveSmallIntegerField(default=0)
+    draws = models.PositiveSmallIntegerField(default=0)
+    loses = models.PositiveSmallIntegerField(default=0)
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -45,16 +65,35 @@ class Player(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
 
-class Game(models.Model):
+
+class Game(SoftDeleteModel):
     club1 = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, related_name="club1_id")
     club2 = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
     start_time = models.TimeField(blank=True)
-    result1 = models.PositiveSmallIntegerField(default=0)
-    result2 = models.PositiveSmallIntegerField(default=0)
+    result1 = models.PositiveSmallIntegerField(null=True, blank=True)
+    result2 = models.PositiveSmallIntegerField(null=True, blank=True)
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.url
+
+    def save(self, force_insert=False, **kwargs):
+        print(self.club2.name + "QQQQQQQQQQQQQQQQQQQQ")
+        if self.pk:
+            print("qqqqqqqqqqqqq1111111111111")
+            print(datetime.datetime.now().strftime("%H:%M:%S"))
+        else:
+            print(datetime.time)
+            sTime = self.start_time
+            if sTime == datetime.time:
+                self.result2 = 12
+
+        return self.save_base(**kwargs)
 
 
 class Betting(models.Model):

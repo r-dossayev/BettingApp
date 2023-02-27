@@ -1,0 +1,11 @@
+{% extends 'oneXbet/layouts/layout.html' %}
+{% block root %}
+   <form method="POST">
+        {% csrf_token %}  <!-- protection against cross-site request forgery -->
+        <!-- form variable containing the login form fields -->
+        {{ form.as_p }}
+        <!-- submit button for login form -->
+       <button type="submit" >goo</button>
+    </form>
+    <h1>QQQQQQQQQQQQQQQQQQQQQQQQq</h1>
+{% endblock %}

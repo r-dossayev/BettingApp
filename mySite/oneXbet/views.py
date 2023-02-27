@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from oneXbet.forms import RegisterUserForm
+from oneXbet.forms import RegisterUserForm, BettingForm
 from oneXbet.models import League
 
 
@@ -47,6 +47,12 @@ class RegisterUser(CreateView):
     # form = NewUserForm()
     form_class = RegisterUserForm
     template_name = 'register.html'
+    success_url = reverse_lazy('home')
+
+
+class BettingPage(CreateView):
+    form_class = BettingForm
+    template_name = 'oneXbet/betting.html'
     success_url = reverse_lazy('home')
 
 
