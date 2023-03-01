@@ -19,6 +19,14 @@ class SoftDeleteModel(models.Model):
         abstract = True
 
 
+class MyAppUser(models.Model):
+    def __unicode__(self):
+        return self.user.username
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    money = models.PositiveIntegerField(blank=True, default=5000)
+    phone = models.CharField(max_length=135, blank=True)
+
+
 class League(models.Model):
     name = models.CharField(max_length=50)
     poster = models.ImageField(upload_to="leaguesImages/", null=True)
@@ -99,7 +107,7 @@ class Game(SoftDeleteModel):
 class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=False)
     draw = models.BooleanField(default=False, blank=True)
     money = models.PositiveIntegerField(blank=True)
     url = models.SlugField(max_length=160, unique=True)

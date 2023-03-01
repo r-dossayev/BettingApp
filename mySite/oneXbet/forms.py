@@ -27,4 +27,6 @@ class BettingForm(forms.ModelForm):
 
     class Meta:
         model = Betting
-        fields = ('money', 'club')
+        fields = ('money', 'club', 'game', 'url')
+
+# https://stackoverflow.com/questions/16079299/getting-init-got-an-unexpected-keyword-argument-instance-with-createview  #ctacko, example forms

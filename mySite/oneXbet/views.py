@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 # from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
 from oneXbet.forms import RegisterUserForm, BettingForm
@@ -53,7 +55,13 @@ class RegisterUser(CreateView):
 class BettingPage(CreateView):
     form_class = BettingForm
     template_name = 'oneXbet/betting.html'
-    success_url = reverse_lazy('home')
+
+    def form_valid(self, form=form_class):
+        betting = form.save(commit=False)
+        betting.user = self.request.user
+        betting.save()
+        messages.add_message(self.request, messages.INFO, 'betting created successfully!')
+        return redirect(reverse('home'))
 
 
 class LoginUserForm(LoginView):
@@ -62,6 +70,6 @@ class LoginUserForm(LoginView):
 
 @login_required
 def custom_logout(request):
-    messages.add_message(request, messages.INFO, 'Logged out successfully!')
+    messages.add_message(request, messages.WARNING, 'Logged out successfully!')
     logout(request)
     return redirect('home')
