@@ -1,0 +1,16 @@
+{% extends 'oneXbet/layouts/layout.html' %}
+{% block root %}
+    <br><br><br><br><br><br>
+    <form style="background-color: #fdff00" class="footer_form" method="post">
+    {% csrf_token %}
+{#     {{form.as_p}}#}
+        {% for foo in form %}
+        <div>
+        {{ foo }}
+        </div>
+        {% endfor %}
+
+    <button class="submit"> submit</button>
+    </form>
+    <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

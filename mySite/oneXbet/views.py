@@ -7,13 +7,11 @@ from django.http import HttpResponseRedirect
 # from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, FormView
 
-from oneXbet.forms import RegisterUserForm, BettingForm
+from oneXbet.forms import *
 from oneXbet.models import League
 
-
-# Create your views here.
 
 def handler404(request, exception):
     return render(request, '404page.html', status=404)
@@ -73,3 +71,18 @@ def custom_logout(request):
     messages.add_message(request, messages.WARNING, 'Logged out successfully!')
     logout(request)
     return redirect('home')
+
+
+class ContactFormView(FormView):
+    form_class = ContactForm
+    template_name = 'oneXbet/contact.html'
+    success_url = 'home'
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('home')
+
+    # def get_context_data(self, object_list=None, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context['title'] = Book.objects.all()
+    #     return context
