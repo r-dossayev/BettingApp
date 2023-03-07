@@ -35,5 +35,6 @@ class ContactForm(forms.Form):
         widget=forms.Textarea(attrs={'class': 'enter', 'cols': 30, 'rows': 1, "placeholder": "message"}))
     admin_email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'enter', "placeholder": "Enter your email"}))
 
-# class="enter" placeholder="Enter your email" type="email" name="Enter your email"
+
+
 # https://stackoverflow.com/questions/16079299/getting-init-got-an-unexpected-keyword-argument-instance-with-createview  #ctacko, example forms
