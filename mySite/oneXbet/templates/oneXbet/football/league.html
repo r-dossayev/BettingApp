@@ -16,6 +16,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">news <span class="sr-only">(current)</span></a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">games<span class="sr-only">(current)</span></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">game results <span class="sr-only">(current)</span></a>
                     </li>
@@ -38,33 +41,9 @@
             </div>
         </nav>
         <center>
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">team</th>
-                    <th scope="col">win</th>
-                    <th scope="col">draw</th>
-                    <th scope="col">lose</th>
-                    <th scope="col">total</th>
-                </tr>
-                </thead>
-                <tbody>
+            {% block football %}
 
-                {% for foo in league.club_set.all %}
-                    <tr>
-                        <th scope="row">{{ foo.pk }}</th>
-                        <td><img src="{{ foo.poster.url }}" width="50" height="50" alt="..."></td>
-                        <td>{{ foo.wins }}</td>
-                        <td>{{ foo.draws }}</td>
-                        <td>{{ foo.loses }}</td>
-                        <td>{{ foo.point }}</td>
-                    </tr>
-                {% endfor %}
-
-
-                </tbody>
-            </table>
+            {% endblock %}
         </center>
 
 

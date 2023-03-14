@@ -27,12 +27,17 @@ def index(request):
 
 def football(request):
     context = {"leagues": League.objects.all()}
-    return render(request, template_name="oneXbet/football.html", context=context)
+    return render(request, template_name="oneXbet/football/football.html", context=context)
 
 
 def league(request, slug):
     context = {'league': League.objects.get(url=slug)}
-    return render(request, 'oneXbet/league.html', context)
+    return render(request, 'oneXbet/football/table.html', context)  # default table html
+
+
+def game(request, slug, gameSlug):
+    pass
+    # league games page
 
 
 class RegisterUser(CreateView):

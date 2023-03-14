@@ -177,7 +177,7 @@ class Game(SoftDeleteModel):
 
 class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
-    club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
+    club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=False)
     draw = models.BooleanField(default=False, blank=True)
     money = models.PositiveIntegerField(blank=True)

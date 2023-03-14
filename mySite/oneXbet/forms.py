@@ -24,10 +24,11 @@ class BettingForm(forms.ModelForm):
     # game = forms.ChoiceField()
     # club = forms.ChoiceField()
     # money = forms.IntegerField(label='money')
+    # game = forms.CharField(label='game', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'login'}))
 
     class Meta:
         model = Betting
-        fields = ('money', 'club', 'game', 'url')
+        fields = ('money', 'game', 'url')
 
 
 class ContactForm(forms.Form):
