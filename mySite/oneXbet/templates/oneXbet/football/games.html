@@ -1,6 +1,40 @@
 {% extends 'oneXbet/football/league.html' %}
 {% block football %}
-<div>
+    <style>
+        .myGame{
+            padding: 10px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgO51xz1hXhA7EO3SV_NmSd5Ch8bdFFxMjx1yS1FcsnAbmfK01awvWiUiNKkNGD0Dr5d8&usqp=CAU");
+            width: 80%;
+            align-self: center;
 
-</div>
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .myContent{
+            margin-top: 20px;
+            align-self: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .myText{
+            color: #FFFFFF;
+        }
+        .myImg{
+            border-radius: 20px;
+        }
+    </style>
+   {% for game in games %}
+    <div class="myGame">
+        <div class="myDate">
+            <span class="myText">{{ game.start_time }}</span>
+        </div>
+        <div class="myContent">
+            <div><h2 class="myText"><img  class="myImg" src="{{ game.club1.poster.url }}" width="50" height="50" alt="...">{{ game.club1.name }}</h2></div>
+           <center> <h1 style="color: #ff0307;margin-left: 80px">VS</h1></center>
+            <div><h2 class="myText"><img class="myImg" src="{{ game.club2.poster.url }}" width="50" height="50" alt="...">{{ game.club2.name }}</h2></div>
+        </div>
+    </div>
+   {% endfor %}
+
 {% endblock %}
