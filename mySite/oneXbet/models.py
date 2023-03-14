@@ -94,7 +94,6 @@ class Game(SoftDeleteModel):
 
     def save(self, force_insert=False, **kwargs):
         if self.pk:
-
             team_1 = Club.objects.get(pk=self.club1.pk)
             team_2 = Club.objects.get(pk=self.club2.pk)
             sum1 = team_1.point
@@ -106,15 +105,12 @@ class Game(SoftDeleteModel):
             count5 = team_2.wins
             count6 = team_2.loses
             userBetting_1 = Betting.objects.filter(club=team_1).all()
-            print('11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
-            print(userBetting_1[0])
             userBetting_2 = Betting.objects.filter(club=team_2).all()
             if self.result1 > self.result2:
                 if userBetting_1:
                     for bet in userBetting_1:
                         betMoney = bet.money
                         user_1 = MyAppUser.objects.get(user=bet.user)
-                        print( '22222222222222222222222222222')
                         userMoney = user_1.money
                         user_1.money = betMoney + userMoney
                         user_1.save()
@@ -124,7 +120,6 @@ class Game(SoftDeleteModel):
                     for bet in userBetting_2:
                         betMoney = bet.money
                         user_1 = MyAppUser.objects.get(user=bet.user)
-                        print('22222222222222222222222222222')
                         userMoney = user_1.money
                         user_1.money = betMoney - userMoney
                         user_1.save(user_1)
@@ -133,20 +128,20 @@ class Game(SoftDeleteModel):
                 curClub = Club.objects.get(pk=self.club1.pk)
                 curClub.point = sum1 + 3
                 curClub.save()
-                curTeam = Club.objects.get(self=self.club1)
+                curTeam = Club.objects.get(pk=self.club1.pk)
                 curTeam.wins = count2 + 1
                 curTeam.save()
-                curTeam2 = Club.objects.get(self=self.club2)
+                curTeam2 = Club.objects.get(pk=self.club2.pk)
                 curTeam2.loses = count6 + 1
                 curTeam2.save()
             elif self.result1 < self.result2:
                 curClub = Club.objects.get(pk=self.club2.pk)
                 curClub.point = sum2 + 3
                 curClub.save()
-                curTeam = Club.objects.get(self=self.club2)
+                curTeam = Club.objects.get(pk=self.club2.pk)
                 curTeam.wins = count5 + 1
                 curTeam.save()
-                curTeam2 = Club.objects.get(self=self.club1)
+                curTeam2 = Club.objects.get(pk=self.club1.pk)
                 curTeam2.loses = count3 + 1
                 curTeam2.save()
                 if userBetting_2:
@@ -169,13 +164,13 @@ class Game(SoftDeleteModel):
                         bet.save()
             else:
                 curClub = Club.objects.get(pk=self.club1.pk)
-                curClub.point = sum2 + 1
+                curClub.point = sum1 + 1
+                curClub.draws = count1 + 1
                 curClub.save()
                 curClub2 = Club.objects.get(pk=self.club2.pk)
                 curClub2.point = sum2 + 1
+                curClub2.draws = count4 + 1
                 curClub2.save()
-        else:
-            print(datetime.time)
 
         return self.save_base(**kwargs)
 
@@ -190,7 +185,3 @@ class Betting(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-# def upd(club_pk, newPoint):
-#     curClub = Club.objects.get(pk=club_pk)
-#     curClub.point = newPoint
-#     curClub.save()
