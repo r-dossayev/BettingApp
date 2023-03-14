@@ -10,7 +10,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
 
 from oneXbet.forms import *
-from oneXbet.models import League
+from oneXbet.models import League, Game
 
 
 def handler404(request, exception):
@@ -35,9 +35,18 @@ def league(request, slug):
     return render(request, 'oneXbet/football/table.html', context)  # default table html
 
 
+def games(request, slug):
+    leagueA = League.objects.get(url=slug)
+    currentLeagueGames = Game.objects.filter(league=leagueA).filter(is_deleted=False)
+
+    context = {'games': currentLeagueGames}
+    return render(request, 'oneXbet/football/games.html', context)
+    # league games page
+
+
 def game(request, slug, gameSlug):
     pass
-    # league games page
+    # one game page
 
 
 class RegisterUser(CreateView):

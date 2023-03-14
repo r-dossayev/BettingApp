@@ -80,6 +80,7 @@ class Player(models.Model):
 
 
 class Game(SoftDeleteModel):
+    league = models.ForeignKey(League, null=True, on_delete=models.CASCADE, blank=True)
     club1 = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, related_name="club1_id")
     club2 = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL)
     start_time = models.TimeField(blank=True)
@@ -106,71 +107,72 @@ class Game(SoftDeleteModel):
             count6 = team_2.loses
             userBetting_1 = Betting.objects.filter(club=team_1).all()
             userBetting_2 = Betting.objects.filter(club=team_2).all()
-            if self.result1 > self.result2:
-                if userBetting_1:
-                    for bet in userBetting_1:
-                        betMoney = bet.money
-                        user_1 = MyAppUser.objects.get(user=bet.user)
-                        userMoney = user_1.money
-                        user_1.money = betMoney + userMoney
-                        user_1.save()
-                        bet.user = None
-                        bet.save()
-                if userBetting_2:
-                    for bet in userBetting_2:
-                        betMoney = bet.money
-                        user_1 = MyAppUser.objects.get(user=bet.user)
-                        userMoney = user_1.money
-                        user_1.money = betMoney - userMoney
-                        user_1.save(user_1)
-                        bet.user = None
-                        bet.save()
-                curClub = Club.objects.get(pk=self.club1.pk)
-                curClub.point = sum1 + 3
-                curClub.save()
-                curTeam = Club.objects.get(pk=self.club1.pk)
-                curTeam.wins = count2 + 1
-                curTeam.save()
-                curTeam2 = Club.objects.get(pk=self.club2.pk)
-                curTeam2.loses = count6 + 1
-                curTeam2.save()
-            elif self.result1 < self.result2:
-                curClub = Club.objects.get(pk=self.club2.pk)
-                curClub.point = sum2 + 3
-                curClub.save()
-                curTeam = Club.objects.get(pk=self.club2.pk)
-                curTeam.wins = count5 + 1
-                curTeam.save()
-                curTeam2 = Club.objects.get(pk=self.club1.pk)
-                curTeam2.loses = count3 + 1
-                curTeam2.save()
-                if userBetting_2:
-                    for bet in userBetting_2:
-                        betMoney = bet.money
-                        user_2 = MyAppUser.objects.get(user=bet.user)
-                        userMoney = user_2.money
-                        user_2.money = betMoney + userMoney
-                        user_2.save()
-                        bet.user = None
-                        bet.save()
-                if userBetting_1:
-                    for bet in userBetting_1:
-                        betMoney = bet.money
-                        user_2 = MyAppUser.objects.get(user=bet.user)
-                        userMoney = user_2.money
-                        user_2.money = betMoney - userMoney
-                        user_2.save()
-                        bet.user = None
-                        bet.save()
-            else:
-                curClub = Club.objects.get(pk=self.club1.pk)
-                curClub.point = sum1 + 1
-                curClub.draws = count1 + 1
-                curClub.save()
-                curClub2 = Club.objects.get(pk=self.club2.pk)
-                curClub2.point = sum2 + 1
-                curClub2.draws = count4 + 1
-                curClub2.save()
+            if self.result1:
+                if self.result1 > self.result2:
+                    if userBetting_1:
+                        for bet in userBetting_1:
+                            betMoney = bet.money
+                            user_1 = MyAppUser.objects.get(user=bet.user)
+                            userMoney = user_1.money
+                            user_1.money = betMoney + userMoney
+                            user_1.save()
+                            bet.user = None
+                            bet.save()
+                    if userBetting_2:
+                        for bet in userBetting_2:
+                            betMoney = bet.money
+                            user_1 = MyAppUser.objects.get(user=bet.user)
+                            userMoney = user_1.money
+                            user_1.money = betMoney - userMoney
+                            user_1.save(user_1)
+                            bet.user = None
+                            bet.save()
+                    curClub = Club.objects.get(pk=self.club1.pk)
+                    curClub.point = sum1 + 3
+                    curClub.save()
+                    curTeam = Club.objects.get(pk=self.club1.pk)
+                    curTeam.wins = count2 + 1
+                    curTeam.save()
+                    curTeam2 = Club.objects.get(pk=self.club2.pk)
+                    curTeam2.loses = count6 + 1
+                    curTeam2.save()
+                elif self.result1 < self.result2:
+                    curClub = Club.objects.get(pk=self.club2.pk)
+                    curClub.point = sum2 + 3
+                    curClub.save()
+                    curTeam = Club.objects.get(pk=self.club2.pk)
+                    curTeam.wins = count5 + 1
+                    curTeam.save()
+                    curTeam2 = Club.objects.get(pk=self.club1.pk)
+                    curTeam2.loses = count3 + 1
+                    curTeam2.save()
+                    if userBetting_2:
+                        for bet in userBetting_2:
+                            betMoney = bet.money
+                            user_2 = MyAppUser.objects.get(user=bet.user)
+                            userMoney = user_2.money
+                            user_2.money = betMoney + userMoney
+                            user_2.save()
+                            bet.user = None
+                            bet.save()
+                    if userBetting_1:
+                        for bet in userBetting_1:
+                            betMoney = bet.money
+                            user_2 = MyAppUser.objects.get(user=bet.user)
+                            userMoney = user_2.money
+                            user_2.money = betMoney - userMoney
+                            user_2.save()
+                            bet.user = None
+                            bet.save()
+                else:
+                    curClub = Club.objects.get(pk=self.club1.pk)
+                    curClub.point = sum1 + 1
+                    curClub.draws = count1 + 1
+                    curClub.save()
+                    curClub2 = Club.objects.get(pk=self.club2.pk)
+                    curClub2.point = sum2 + 1
+                    curClub2.draws = count4 + 1
+                    curClub2.save()
 
         return self.save_base(**kwargs)
 
