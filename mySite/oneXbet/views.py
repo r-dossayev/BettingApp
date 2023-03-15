@@ -32,6 +32,7 @@ def football(request):
 
 def league(request, slug):
     context = {'league': League.objects.get(url=slug)}
+    print(context.get('league').url)
     return render(request, 'oneXbet/football/table.html', context)  # default table html
 
 
@@ -39,14 +40,14 @@ def games(request, slug):
     leagueA = League.objects.get(url=slug)
     currentLeagueGames = Game.objects.filter(league=leagueA).filter(is_deleted=False)
 
-    context = {'games': currentLeagueGames}
+    context = {'games': currentLeagueGames, 'league': League.objects.get(url=slug)}
     return render(request, 'oneXbet/football/games.html', context)
     # league games page
 
 
 def game(request, slug, gameSlug):
-    pass
-    # one game page
+    context = {'game': Game.objects.get(url=gameSlug),'league': League.objects.get(url=slug)}
+    return render(request, 'oneXbet/football/game.html', context)
 
 
 class RegisterUser(CreateView):

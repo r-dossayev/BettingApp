@@ -90,6 +90,9 @@ class Game(SoftDeleteModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse('game', kwargs={'slug': self.league.url, 'gameSlug': self.url})
+
     def __str__(self):
         return self.url
 
