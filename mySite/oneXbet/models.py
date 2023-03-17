@@ -25,8 +25,12 @@ class MyAppUser(models.Model):
         return self.user.id
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    money = models.PositiveIntegerField(blank=True, default=5000)
-    phone = models.CharField(max_length=135, blank=True)
+    money = models.PositiveIntegerField(blank=True, default=5000, null=True)
+    phone = models.CharField(max_length=135, blank=True, null=True)
+    avatarImg = models.ImageField(upload_to="usersAvatar/", blank=True, null=True)
+    info = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=250, blank=True, null=True)
+    socialAccount = models.CharField(max_length=250, blank=True, null=True)
 
 
 class League(models.Model):
@@ -115,7 +119,7 @@ class Game(SoftDeleteModel):
                     if userBetting_1:
                         for bet in userBetting_1:
                             betMoney = bet.money
-                            user_1 = MyAppUser.objects.get(user=bet.user)
+                            user_1 = User.objects.get(pk=bet.user.pk)
                             userMoney = user_1.money
                             user_1.money = betMoney + userMoney
                             user_1.save()
@@ -124,7 +128,7 @@ class Game(SoftDeleteModel):
                     if userBetting_2:
                         for bet in userBetting_2:
                             betMoney = bet.money
-                            user_1 = MyAppUser.objects.get(user=bet.user)
+                            user_1 = User.objects.get(pk=bet.user.pk)
                             userMoney = user_1.money
                             user_1.money = betMoney - userMoney
                             user_1.save(user_1)
@@ -152,7 +156,7 @@ class Game(SoftDeleteModel):
                     if userBetting_2:
                         for bet in userBetting_2:
                             betMoney = bet.money
-                            user_2 = MyAppUser.objects.get(user=bet.user)
+                            user_2 = User.objects.get(pk=bet.user.pk)
                             userMoney = user_2.money
                             user_2.money = betMoney + userMoney
                             user_2.save()
@@ -161,7 +165,7 @@ class Game(SoftDeleteModel):
                     if userBetting_1:
                         for bet in userBetting_1:
                             betMoney = bet.money
-                            user_2 = MyAppUser.objects.get(user=bet.user)
+                            user_2 = User.objects.get(pk=bet.user.pk)
                             userMoney = user_2.money
                             user_2.money = betMoney - userMoney
                             user_2.save()
@@ -189,4 +193,3 @@ class Betting(models.Model):
     url = models.SlugField(max_length=160, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-

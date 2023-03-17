@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -10,7 +10,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, TemplateView
 
 from oneXbet.forms import *
-from oneXbet.models import League, Game
+from oneXbet.models import League, Game, MyAppUser
 
 
 def handler404(request, exception):
@@ -50,19 +50,24 @@ def game(request, slug, gameSlug):
     return render(request, 'oneXbet/football/game.html', context)
 
 
-class RegisterUser(CreateView):
-    # if request.method == "POST":
-    #     form = NewUserForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.save()
-    #         login(request, user)
-    #         messages.success(request, "Registration successful.")
-    #         return redirect("main:homepage")
-    #     messages.error(request, "Unsuccessful registration. Invalid information.")
-    # form = NewUserForm()
-    form_class = RegisterUserForm
-    template_name = 'register.html'
-    success_url = reverse_lazy('home')
+def registerUser(request):
+    if request.method == "POST":
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            myNewUser = MyAppUser()
+            myNewUser.user = user
+            myNewUser.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("home")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = RegisterUserForm()
+    context = {"form": form}
+    return render(request, 'register.html', context)
+    # form_class = RegisterUserForm
+    # template_name = 'register.html'
+    # success_url = reverse_lazy('home')
 
 
 class BettingPage(CreateView):
@@ -88,8 +93,20 @@ def custom_logout(request):
     return redirect('home')
 
 
-class ProfileView(TemplateView):
-    template_name = "oneXbet/profile.html"
+# def profileView(request):
+#     user = User.objects.get(pk=request.user.pk)
+#     form = UserUpdateForm(instance=user)
+#     if request.method == 'POST':
+#         form = UserUpdateForm(request.POST, instance=user)
+#         if form.is_valid():
+#             # update the existing `Band` in the database
+#             form.save()
+#             # redirect to the detail page of the `Band` we just updated
+#             return redirect('profile')
+#         else:
+#             form = UserUpdateForm(instance=user)
+#     context = {"form": form}
+#     return render(request, "oneXbet/profile.html", context)
 
 
 class ContactFormView(FormView):

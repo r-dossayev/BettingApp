@@ -75,10 +75,8 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Basketball</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Hockey</a>
-                                    </li>
                                 </ul>{% if  user.is_authenticated %}
+{#                                <div class="sign_btn"><a href="{% url 'profile' %}">PROFILE</a></div>#}
                                 <div class="sign_btn"><a href="{% url 'logout' %}">LOGOUT</a></div>
                             {% else %}
                                 <div class="sign_btn"><a href="{% url 'register' %}">REGISTER</a></div>

@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
@@ -36,6 +36,11 @@ class ContactForm(forms.Form):
         widget=forms.Textarea(attrs={'class': 'enter', 'cols': 30, 'rows': 1, "placeholder": "message"}))
     admin_email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'enter', "placeholder": "Enter your email"}))
 
+
+# class UserUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ('money', 'avatarImg', 'socialAccount', 'info', 'location', 'phone')
 
 
 # https://stackoverflow.com/questions/16079299/getting-init-got-an-unexpected-keyword-argument-instance-with-createview  #ctacko, example forms
