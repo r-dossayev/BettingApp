@@ -22,7 +22,7 @@ class SoftDeleteModel(models.Model):
 
 class MyAppUser(models.Model):
     def __unicode__(self):
-        return self.user.username
+        return self.user.id
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     money = models.PositiveIntegerField(blank=True, default=5000)

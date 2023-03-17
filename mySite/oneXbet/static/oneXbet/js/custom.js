@@ -11,7 +11,7 @@ $(function () {
 
 	setTimeout(function () {
 		$('.loader_bg').fadeToggle();
-	}, 1500);
+	}, 100);
 
 
 	/* Mouseover
@@ -44,7 +44,7 @@ $(function () {
 	$("#back-to-top").on("click", function () {
 		$('body,html').animate({
 			scrollTop: 0
-		}, 1000);
+		}, 500);
 	});
 
 
@@ -91,7 +91,7 @@ $(function () {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	// optional
 	$('#blogCarousel').carousel({
-		interval: 5000
+		interval: 1000
 	});
 
 

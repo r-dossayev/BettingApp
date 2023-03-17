@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 # from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, TemplateView
 
 from oneXbet.forms import *
 from oneXbet.models import League, Game
@@ -46,7 +46,7 @@ def games(request, slug):
 
 
 def game(request, slug, gameSlug):
-    context = {'game': Game.objects.get(url=gameSlug),'league': League.objects.get(url=slug)}
+    context = {'game': Game.objects.get(url=gameSlug), 'league': League.objects.get(url=slug)}
     return render(request, 'oneXbet/football/game.html', context)
 
 
@@ -86,6 +86,10 @@ def custom_logout(request):
     messages.add_message(request, messages.WARNING, 'Logged out successfully!')
     logout(request)
     return redirect('home')
+
+
+class ProfileView(TemplateView):
+    template_name = "oneXbet/profile.html"
 
 
 class ContactFormView(FormView):
