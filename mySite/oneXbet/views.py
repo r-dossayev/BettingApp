@@ -93,20 +93,18 @@ def custom_logout(request):
     return redirect('home')
 
 
-# def profileView(request):
-#     user = User.objects.get(pk=request.user.pk)
-#     form = UserUpdateForm(instance=user)
-#     if request.method == 'POST':
-#         form = UserUpdateForm(request.POST, instance=user)
-#         if form.is_valid():
-#             # update the existing `Band` in the database
-#             form.save()
-#             # redirect to the detail page of the `Band` we just updated
-#             return redirect('profile')
-#         else:
-#             form = UserUpdateForm(instance=user)
-#     context = {"form": form}
-#     return render(request, "oneXbet/profile.html", context)
+def profileView(request):
+    qw = MyAppUser.objects.get(user_id=request.user.pk)
+    form = UserUpdateForm(instance=qw)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=qw)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            form = UserUpdateForm(instance=qw)
+    context = {"form": form}
+    return render(request, "oneXbet/profile.html", context)
 
 
 class ContactFormView(FormView):

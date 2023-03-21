@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
 
-from oneXbet.models import Betting
+from oneXbet.models import Betting, MyAppUser
 
 
 class RegisterUserForm(UserCreationForm):
@@ -37,10 +37,10 @@ class ContactForm(forms.Form):
     admin_email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'enter', "placeholder": "Enter your email"}))
 
 
-# class UserUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('money', 'avatarImg', 'socialAccount', 'info', 'location', 'phone')
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MyAppUser
+        fields = ('money', 'avatarImg', 'socialAccount', 'info', 'location', 'phone')
 
 
 # https://stackoverflow.com/questions/16079299/getting-init-got-an-unexpected-keyword-argument-instance-with-createview  #ctacko, example forms

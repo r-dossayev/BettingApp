@@ -10,7 +10,7 @@ urlpatterns = [
     path('leagues/<slug:slug>/games/', games, name="games"),
     path('leagues/<slug:slug>/games/<slug:gameSlug>', game, name="game"),
     path('contact', ContactFormView.as_view(), name='contact'),
-    # path('profile', profileView, name='profile'),
+    path('profile', profileView, name='profile'),
     # path('leagues/<slug:slug>/<slug:club>', league, name="club"),
     path('betting', BettingPage.as_view(), name="bet"),
 ]

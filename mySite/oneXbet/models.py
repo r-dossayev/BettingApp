@@ -27,7 +27,7 @@ class MyAppUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     money = models.PositiveIntegerField(blank=True, default=5000, null=True)
     phone = models.CharField(max_length=135, blank=True, null=True)
-    avatarImg = models.ImageField(upload_to="usersAvatar/", blank=True, null=True)
+    avatarImg = models.ImageField(upload_to="userAvatar/", blank=True, null=True)
     info = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=250, blank=True, null=True)
     socialAccount = models.CharField(max_length=250, blank=True, null=True)

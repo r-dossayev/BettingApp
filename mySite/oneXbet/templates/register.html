@@ -1,18 +1,8 @@
 {% extends 'oneXbet/layouts/layout.html' %}
 {% block root %}
-
-
-    <!--<form method="post">-->
-    {#<!--    {% csrf_token %}-->#}
-    {#<!--    {{ form.as_p }}-->#}
-    <!--    <button type="submit">Регистрация</button>-->
-    <!--</form>-->
-
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
     <style>
         body {
             background: #333;
@@ -107,7 +97,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {% for f in form %}
-                        <!--<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>-->
+{#                        <!--<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>-->#}
 
                         <div class="form-group">
                             <div class="input-group">
@@ -117,7 +107,7 @@
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                        {{ f.errors }}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true">&times</span>
                                         </button>
                                     </div>
                                 {% endif %}

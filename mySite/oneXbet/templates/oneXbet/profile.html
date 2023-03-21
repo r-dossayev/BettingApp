@@ -196,13 +196,10 @@
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                     <form method="post">
+                                                     <form method="post" enctype="multipart/form-data">
                                                     <div class="modal-body">
-
                                                             {% csrf_token %}
                                                             {{ form.as_p }}
-
-
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
