@@ -94,16 +94,16 @@ def custom_logout(request):
 
 
 def profileView(request):
-    qw = MyAppUser.objects.get(user_id=request.user.pk)
-    form = UserUpdateForm(instance=qw)
+    newUser = MyAppUser.objects.get(user_id=request.user.pk)
+    form = UserUpdateForm(instance=newUser)
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, request.FILES, instance=qw)
+        form = UserUpdateForm(request.POST, request.FILES, instance=newUser)
         if form.is_valid():
             form.save()
             return redirect('profile')
         else:
-            form = UserUpdateForm(instance=qw)
-    context = {"form": form}
+            form = UserUpdateForm(instance=newUser)
+    context = {"form": form, "user": newUser}
     return render(request, "oneXbet/profile.html", context)
 
 
