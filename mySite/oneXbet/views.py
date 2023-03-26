@@ -1,13 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
-# from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, FormView, TemplateView
+from django.urls import reverse
+from django.views.generic import CreateView, FormView
 
 from oneXbet.forms import *
 from oneXbet.models import League, Game, MyAppUser
@@ -46,6 +43,10 @@ def games(request, slug):
 
 
 def game(request, slug, gameSlug):
+    if request.method == "POST":
+        print(request.POST)
+        print(request.POST["win"])
+        print("request.POST====================================================")
     context = {'game': Game.objects.get(url=gameSlug), 'league': League.objects.get(url=slug)}
     return render(request, 'oneXbet/football/game.html', context)
 
@@ -103,8 +104,8 @@ def profileView(request):
             return redirect('profile')
         else:
             form = UserUpdateForm(instance=newUser)
-    context = {"form": form, "user": newUser}
-    return render(request, "oneXbet/profile.html", context)
+    context = {"form": form, "myUser": newUser}
+    return render(request, template_name="oneXbet/profile.html", context=context)
 
 
 class ContactFormView(FormView):

@@ -1,273 +1,15 @@
 {% extends 'oneXbet/football/league.html' %}
 {% block football %}
-    <style>
-        {#@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");#}
-
-
-        :root {
-            --color-text-primary: #1c2a38;
-            --color-text-secondary: #8A8F98;
-            --color-text-alert: #d72641;
-            --color-text-icon: #dbdade;
-            --color-bg-primary: #fff;
-            --color-bg-secondary: #f3f5f9;
-            --color-bg-alert: #fdeaec;
-            --color-theme-primary: #623ce6;
-        }
-
-        button,
-        select,
-        textarea {
-            font: inherit;
-        }
-
-        img {
-            display: block;
-        }
-
-        strong {
-            font-weight: 600;
-        }
-
-
-        .match {
-
-            display: flex;
-            flex-direction: column;
-            min-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 0 2px 0 #303030, 0 4px 4px 0 #303030;
-        }
-
-        .match-header {
-            display: flex;
-            border-bottom: 2px solid #303030;
-            padding: 16px;
-            align-items: center;
-        }
-
-        .match-status {
-
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            line-height: 1;
-            margin-right: auto;
-            width: 10%;
-            height: 60px;
-
-        }
-
-
-        .match-tournament {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-
-
-        }
-
-        .match-actions {
-            display: flex;
-            margin-left: auto;
-        }
-
-        .btn-icon {
-            border: 0;
-            background-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .match-content {
-            display: flex;
-
-        }
-
-        .column {
-            padding: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: calc(100% / 3);
-        }
-
-        .team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .team-logo {
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: var(--color-bg-primary);
-            box-shadow: 0 4px 4px 0 #303030,
-            0 0 0 15px var(--color-bg-secondary);
-
-
-        }
-
-        .team-name {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .match-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .match-date, .match-referee {
-            font-size: 14px;
-
-
-        }
-
-        .match-score {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-        }
-
-        .match-score-number {
-            font-size: 48px;
-            font-weight: 600;
-            line-height: 1;
-
-
-        }
-
-        .match-score-divider {
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 1;
-            color: var(--color-text-icon);
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-
-        .match-time-lapsed {
-            color: #DF9443;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-
-        .match-referee {
-            margin-top: 12px;
-        }
-
-        .match-bet-place {
-            border: 0;
-            background-color: var(--color-theme-primary);
-            border-radius: 6px;
-            padding: 10px 48px;
-            color: #fff;
-            font-size: 14px;
-            box-shadow: 0 4px 8px 0 #ffff;
-        }
-
-
-        .container {
-
-
-            width: 80%;
-        }
-
-        [type="radio"]:checked,
-        [type="radio"]:not(:checked) {
-            width: 0;
-            height: 0;
-            visibility: hidden;
-        }
-
-        .checkbox-tools:checked + label,
-        .checkbox-tools:not(:checked) + label {
-            position: relative;
-            display: inline-block;
-            padding: 20px;
-            width: 110px;
-            font-size: 10px;
-            line-height: 10px;
-            letter-spacing: 1px;
-            text-align: center;
-            border-radius: 4px;
-            overflow: hidden;
-            cursor: pointer;
-            text-transform: uppercase;
-            color: #ffffff;
-            -webkit-transition: all 300ms linear;
-            transition: all 300ms linear;
-        }
-
-        .checkbox-tools:not(:checked) + label {
-            background-color: #353746;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .checkbox-tools:checked + label {
-            background-color: transparent;
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .checkbox-tools:not(:checked) + label:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .checkbox-tools:checked + label::before,
-        .checkbox-tools:not(:checked) + label::before {
-            position: absolute;
-            content: "";
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 4px;
-            background-image: linear-gradient(298deg, #da2c4d, #f8ab37);
-            z-index: -1;
-        }
-
-        .checkbox-tools:checked + label .uil,
-        .checkbox-tools:not(:checked) + label .uil {
-            font-size: 16px;
-            line-height: 16px;
-            display: block;
-            padding-bottom: 10px;
-        }
-
-
-    </style>
-    <br>
-    <br>
     <br>
     <div class="container">
-        <!-- code here -->
         <div class="match">
             <div class="match-header">
-                <div class="match-status">Live</div>
-                <div class="match-tournament"><img src="https://assets.codepen.io/285131/pl-logo.svg" alt="..."/>{{ league.name }}</div>
-                <div class="match-actions" style="margin-bottom: 20px">
-                    <button class="btn-icon"><i class="material-icons-outlined" style="color: black;">add alert</i>
-                    </button>
-                </div>
+                <div class="match-tournament"><img src="{{ league.poster.url }}" width="100" height="100" alt="..."/></div>
             </div>
             <div class="match-content">
                 <div class="column">
                     <div class="team team--home">
                         <div class="team-logo">
-                            {#  https://assets.codepen.io/285131/whufc.svg#}
                             <img src="{{ game.club1.poster.url }}" alt="..."/>
                         </div>
                         <h2 class="team-name">{{ game.club1.name }}</h2>
@@ -289,19 +31,22 @@
                         <div class="match-referee">
                             Referee: <strong>Joseph Hicks</strong>
                         </div>
-                        <form action="">
+                        <form action="" method="post">
+                            {% csrf_token %}
                             <div class="row justify-content-center pb-5" style="margin-top: 50px">
                                 <div class="col-12 pb-5">
-                                    <input class="checkbox-tools" type="radio" name="tools" id="tool-1" value="{{ game.club1.pk }}" >
+                                    <input class="checkbox-tools" type="radio" checked name="win" id="tool-1" value="{{ game.club1.pk }}" >
                                     <label style="width: 30%;" class="for-checkbox-tools" for="tool-1">
                                         win 2x
-                                    </label><input class="checkbox-tools" type="radio" name="tools" id="tool-2" value="0">
+                                    </label><input class="checkbox-tools" type="radio" name="win" id="tool-2" value="0">
                                     <label style="width: 30%; " class="for-checkbox-tools" for="tool-2" >
                                         draw 1,5x
-                                    </label><input class="checkbox-tools" type="radio" name="tools" value="{{ game.club2.pk }}" id="tool-3">
+                                    </label><input class="checkbox-tools" type="radio" name="win" value="{{ game.club2.pk }}" id="tool-3">
                                     <label style="width: 30%;padding: 20px" class="for-checkbox-tools" for="tool-3">
                                         win 2x
                                     </label>
+                                    <label for="money">money</label>
+                                    <input type="number" name="money">
                                 </div>
                                 <button class="match-bet-place" >bet</button>
                             </div>

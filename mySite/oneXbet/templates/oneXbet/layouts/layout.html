@@ -1,5 +1,4 @@
 {% load static %}
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -7,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'oneXbet/css/bootstrap.min.css' %} ">
     <link rel="stylesheet" href="{% static 'oneXbet/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'oneXbet/cardLeagues/style.css' %}">
+    <link rel="stylesheet" href="{% static 'oneXbet/cardLeagues/game.css' %}">
     <link rel="stylesheet" href="{% static 'oneXbet/css/profile.css' %}">
 </head>
 <body class="main-layout">
@@ -45,16 +45,15 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{% url 'football' %}">Football</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Basketball</a>
-                                    </li>
-                                </ul>{% if  user.is_authenticated %}
-                                <div class="sign_btn"><a href="{% url 'profile' %}">PROFILE</a></div>
-                                <div class="sign_btn"><a href="{% url 'logout' %}">LOGOUT</a></div>
-                            {% else %}
-                                <div class="sign_btn"><a href="{% url 'register' %}">REGISTER</a></div>
-                                <div class="sign_btn"><a href="{% url 'login' %}">LOGIN</a></div>
-                            {% endif %}
+
+                                </ul>
+                                {% if  user.is_authenticated %}
+                                    <div class="sign_btn"><a href="{% url 'profile' %}">PROFILE</a></div>
+                                    <div class="sign_btn"><a href="{% url 'logout' %}">LOGOUT</a></div>
+                                {% else %}
+                                    <div class="sign_btn"><a href="{% url 'register' %}">REGISTER</a></div>
+                                    <div class="sign_btn"><a href="{% url 'login' %}">LOGIN</a></div>
+                                {% endif %}
                             </div>
                         </nav>
                     </div>

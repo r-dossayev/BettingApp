@@ -22,7 +22,7 @@ class SoftDeleteModel(models.Model):
 
 class MyAppUser(models.Model):
     def __unicode__(self):
-        return self.user.id
+        return self.user.username
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     money = models.PositiveIntegerField(blank=True, default=5000, null=True)
@@ -119,7 +119,7 @@ class Game(SoftDeleteModel):
                     if userBetting_1:
                         for bet in userBetting_1:
                             betMoney = bet.money
-                            user_1 = User.objects.get(pk=bet.user.pk)
+                            user_1 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_1.money
                             user_1.money = betMoney + userMoney
                             user_1.save()
@@ -128,7 +128,7 @@ class Game(SoftDeleteModel):
                     if userBetting_2:
                         for bet in userBetting_2:
                             betMoney = bet.money
-                            user_1 = User.objects.get(pk=bet.user.pk)
+                            user_1 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_1.money
                             user_1.money = betMoney - userMoney
                             user_1.save(user_1)
@@ -156,7 +156,7 @@ class Game(SoftDeleteModel):
                     if userBetting_2:
                         for bet in userBetting_2:
                             betMoney = bet.money
-                            user_2 = User.objects.get(pk=bet.user.pk)
+                            user_2 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_2.money
                             user_2.money = betMoney + userMoney
                             user_2.save()
@@ -165,7 +165,7 @@ class Game(SoftDeleteModel):
                     if userBetting_1:
                         for bet in userBetting_1:
                             betMoney = bet.money
-                            user_2 = User.objects.get(pk=bet.user.pk)
+                            user_2 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_2.money
                             user_2.money = betMoney - userMoney
                             user_2.save()
@@ -188,8 +188,8 @@ class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=False)
-    draw = models.BooleanField(default=False, blank=True)
+    draw = models.BooleanField(default=False, blank=True) #nado udalit
     money = models.PositiveIntegerField(blank=True)
-    url = models.SlugField(max_length=160, unique=True)
+    url = models.SlugField(max_length=160, unique=True, auto_created=True) #nado udalit
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

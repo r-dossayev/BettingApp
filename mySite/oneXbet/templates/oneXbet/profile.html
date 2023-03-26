@@ -9,14 +9,15 @@
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
                                     <div class="m-b-25">
-                                        <img src="{{ user.avatarImg.url }}" class="img-radius"
-                                             alt="User-Profile-Image">
+                                        {% if myUser.avatarImg %}
+                                            <img src="{{ myUser.avatarImg.url }}" class="img-radius" alt="User-Profile-Image">
+                                        {% endif %}
                                     </div>
-                                    <h6 class="f-w-600">{{ user.user.username }}</h6>
-{#                                    <p> name:{{ request.user.first_name }} {{ user.user.last_name }}</p>#}
-                                    <p>location: {{ user.location }}</p>
-                                    <p>social: {{ user.socialAccount }}</p>
-                                    <p> money:{{ user.money }} tg</p>
+                                    <h6 class="f-w-600">{{ myUser.user.username }}</h6>
+                                    <p> name:{{ myUser.user.first_name }} {{ myUser.user.last_name }}</p>
+                                    <p>location: {{ myUser.location }}</p>
+                                    <p>social: {{ myUser.socialAccount }}</p>
+                                    <p> money:{{ myUser.money }} tg</p>
                                     <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 </div>
                             </div>
@@ -26,13 +27,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">Email</p>
-                                            <h6 class="text-muted f-w-400">{{ user.user.email }}</h6>
+                                            <h6 class="text-muted f-w-400">{{ myUser.user.email }}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">Phone</p>
                                             <h6 class="text-muted f-w-400">
-                                                {% if user.phone %}
-                                                    {{ user.phone }}
+                                                {% if myUser.phone %}
+                                                    {{ myUser.phone }}
                                                 {% else %}
                                                     no phone number
                                                 {% endif %} </h6>
@@ -40,7 +41,7 @@
                                     </div>
                                     <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Bio</h6>
                                     <div class="row">
-                                        {{ user.info }}
+                                        {{ myUser.info }}
                                     </div>
                                     <ul class="social-link list-unstyled m-t-40 m-b-10">
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
