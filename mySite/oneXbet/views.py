@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, FormView
 
 from oneXbet.forms import *
-from oneXbet.models import League, Game, MyAppUser
+from oneXbet.models import League, Game, MyAppUser, Club
 
 
 def handler404(request, exception):
@@ -43,11 +43,26 @@ def games(request, slug):
 
 
 def game(request, slug, gameSlug):
-    if request.method == "POST":
-        print(request.POST)
-        print(request.POST["win"])
-        print("request.POST====================================================")
     context = {'game': Game.objects.get(url=gameSlug), 'league': League.objects.get(url=slug)}
+    if request.method == "POST":
+        currentUser = MyAppUser.objects.get(user_id=request.user.pk)
+        if request.POST["win"] and request.POST["money"]:
+            betMoney = int(request.POST["money"])
+            currentTeamId = int(request.POST["win"])
+            if currentUser.money >= betMoney:
+                newBetting = Betting()
+                newBetting.user = request.user
+                newBetting.money = betMoney
+                newBetting.game = Game.objects.get(url=gameSlug)
+                newBetting.club = None if currentTeamId == 0 else Club.objects.get(pk=currentTeamId)
+                # self betting club = null, and bet to draw or success win one club betting
+                newBetting.save()
+            else:
+                messages.warning(request, "no money")
+                return redirect('profile')
+        else:
+            messages.warning(request, "not required fields")
+            return render(request, 'oneXbet/football/game.html', context)
     return render(request, 'oneXbet/football/game.html', context)
 
 

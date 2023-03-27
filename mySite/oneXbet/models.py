@@ -1,4 +1,3 @@
-import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -188,8 +187,6 @@ class Betting(models.Model):
     game = models.ForeignKey(Game, null=True, on_delete=models.SET_NULL)
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=False)
-    draw = models.BooleanField(default=False, blank=True) #nado udalit
     money = models.PositiveIntegerField(blank=True)
-    url = models.SlugField(max_length=160, unique=True, auto_created=True) #nado udalit
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -28,7 +28,7 @@ class BettingForm(forms.ModelForm):
 
     class Meta:
         model = Betting
-        fields = ('money', 'game', 'url')
+        fields = ('money', 'game')
 
 
 class ContactForm(forms.Form):

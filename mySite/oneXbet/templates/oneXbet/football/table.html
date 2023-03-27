@@ -16,7 +16,7 @@
                 {% for foo in league.club_set.all %}
                     <tr>
                         <th scope="row">{{ foo.pk }}</th>
-                        <td><img src="{{ foo.poster.url }}" width="50" height="50" alt="..."></td>
+                        <td><img src="{{ foo.poster.url }}" width="50" height="50" alt="...">  {{ foo.name }}</td>
                         <td>{{ foo.wins }}</td>
                         <td>{{ foo.draws }}</td>
                         <td>{{ foo.loses }}</td>
