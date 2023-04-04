@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from oneXbet.views import handler404, handler500, registerUser, LoginUserForm, custom_logout, index
+from oneXbet.views import handler404, handler500, registerUser, LoginUserForm, custom_logout, index, FootballLeaguesAPI
 
 urlpatterns = [
     path('register/', registerUser, name="register"),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', custom_logout, name="logout"),
     path('one/', include('oneXbet.urls')),
     path('admin/', admin.site.urls),
+    path('api/alpha/leagues/', FootballLeaguesAPI.as_view()),
     path('', index)
 ]
 

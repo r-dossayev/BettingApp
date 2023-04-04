@@ -5,9 +5,13 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, FormView
+from rest_framework import generics, authentication, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from oneXbet.forms import *
 from oneXbet.models import League, Game, MyAppUser, Club
+from oneXbet.serializers import LeagueSerializer
 
 
 def handler404(request, exception):
@@ -139,4 +143,14 @@ class ContactFormView(FormView):
     #     return context
 
 
+# API controller
 
+class FootballLeaguesAPI(APIView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        leagues = League.objects.all()
+        return Response({'leagues': LeagueSerializer(leagues, many=True).data})
+    # queryset = League.objects.all()
+    # serializer_class = LeagueSerializer
