@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="{% static 'oneXbet/css/profile.css' %}">
 </head>
 <body class="main-layout">
-<div class="loader_bg">
-    <div class="loader">loading...</div>
-</div>
+
 <header>
     <!-- header inner -->
     <div class="header">
@@ -38,14 +36,14 @@
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarsExample04">
-                                <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="{% url 'home' %}"> About Us </a>
+                                <ul class="navbar-nav mr-auto" style="display: flex; flex-direction: row;
+                                justify-content: space-around">
+                                    <li class="nav-item active" style="margin-top: 10px">
+                                        <a class="nav-link" href="{% url 'home' %}"> <h1 style="color: #ecf7ec">About Us</h1> </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'football' %}">Football</a>
+                                    <li class="nav-item" style="margin-left: 150px;margin-top: 10px">
+                                        <a class="nav-link" href="{% url 'football' %}"><h1 style="color: #ecf7ec">Football</h1></a>
                                     </li>
-
                                 </ul>
                                 {% if  user.is_authenticated %}
                                     <div class="sign_btn"><a href="{% url 'profile' %}">PROFILE</a></div>
@@ -89,12 +87,7 @@
                                 <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</li>
                             </ul>
                         </div>
-                        <div class="col-md-5 offset-md-1">
-                            <h3>Contact us</h3>
-                            <ul class="cont">
-                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</li>
-                            </ul>
-                        </div>
+
                     </div>
                 </div>
             </div>

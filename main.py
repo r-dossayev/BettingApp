@@ -42,3 +42,6 @@
 # t = zlib.crc32(s)
 #
 # print(t)
+
+
+

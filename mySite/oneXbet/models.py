@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -82,6 +81,18 @@ class Player(models.Model):
         return self.name
 
 
+def saveService(sum2, count5, count3, pk2, pk1):
+    curClub = Club.objects.get(pk=pk2)
+    curClub.point = sum2 + 3
+    curClub.save()
+    curTeam = Club.objects.get(pk=pk2)
+    curTeam.wins = count5 + 1
+    curTeam.save()
+    curTeam2 = Club.objects.get(pk=pk1)
+    curTeam2.loses = count3 + 1
+    curTeam2.save()
+
+
 class Game(SoftDeleteModel):
     league = models.ForeignKey(League, null=True, on_delete=models.CASCADE, blank=True)
     club1 = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, related_name="club1_id")
@@ -113,61 +124,35 @@ class Game(SoftDeleteModel):
             count6 = team_2.loses
             userBetting_1 = Betting.objects.filter(club=team_1).all()
             userBetting_2 = Betting.objects.filter(club=team_2).all()
-            if self.result1:
+            if self.result1 is not None and self.result2 is not None:
                 if self.result1 > self.result2:
                     if userBetting_1:
                         for bet in userBetting_1:
                             betMoney = bet.money
                             user_1 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_1.money
-                            user_1.money = betMoney + userMoney
+                            user_1.money = (betMoney * 2) + userMoney
                             user_1.save()
                             bet.user = None
                             bet.save()
                     if userBetting_2:
                         for bet in userBetting_2:
-                            betMoney = bet.money
-                            user_1 = MyAppUser.objects.get(user_id=bet.user_id)
-                            userMoney = user_1.money
-                            user_1.money = betMoney - userMoney
-                            user_1.save(user_1)
                             bet.user = None
                             bet.save()
-                    curClub = Club.objects.get(pk=self.club1.pk)
-                    curClub.point = sum1 + 3
-                    curClub.save()
-                    curTeam = Club.objects.get(pk=self.club1.pk)
-                    curTeam.wins = count2 + 1
-                    curTeam.save()
-                    curTeam2 = Club.objects.get(pk=self.club2.pk)
-                    curTeam2.loses = count6 + 1
-                    curTeam2.save()
+                    saveService(sum1, count2, count6, pk1=self.club2.pk, pk2=self.club1.pk)
                 elif self.result1 < self.result2:
-                    curClub = Club.objects.get(pk=self.club2.pk)
-                    curClub.point = sum2 + 3
-                    curClub.save()
-                    curTeam = Club.objects.get(pk=self.club2.pk)
-                    curTeam.wins = count5 + 1
-                    curTeam.save()
-                    curTeam2 = Club.objects.get(pk=self.club1.pk)
-                    curTeam2.loses = count3 + 1
-                    curTeam2.save()
+                    saveService(sum2, count5, count3, pk1=self.club1.pk, pk2=self.club2.pk)
                     if userBetting_2:
                         for bet in userBetting_2:
                             betMoney = bet.money
                             user_2 = MyAppUser.objects.get(user_id=bet.user_id)
                             userMoney = user_2.money
-                            user_2.money = betMoney + userMoney
+                            user_2.money = (betMoney * 2) + userMoney
                             user_2.save()
                             bet.user = None
                             bet.save()
                     if userBetting_1:
                         for bet in userBetting_1:
-                            betMoney = bet.money
-                            user_2 = MyAppUser.objects.get(user_id=bet.user_id)
-                            userMoney = user_2.money
-                            user_2.money = betMoney - userMoney
-                            user_2.save()
                             bet.user = None
                             bet.save()
                 else:

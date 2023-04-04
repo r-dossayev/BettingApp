@@ -29,7 +29,6 @@ def football(request):
 
 def league(request, slug):
     context = {'league': League.objects.get(url=slug)}
-    print(context.get('league').url)
     return render(request, 'oneXbet/football/table.html', context)  # default table html
 
 
@@ -57,6 +56,8 @@ def game(request, slug, gameSlug):
                 newBetting.club = None if currentTeamId == 0 else Club.objects.get(pk=currentTeamId)
                 # self betting club = null, and bet to draw or success win one club betting
                 newBetting.save()
+                currentUser.money = currentUser.money - betMoney
+                currentUser.save()
             else:
                 messages.warning(request, "no money")
                 return redirect('profile')
@@ -136,3 +137,6 @@ class ContactFormView(FormView):
     #     context = super().get_context_data(**kwargs)
     #     # context['title'] = Book.objects.all()
     #     return context
+
+
+
