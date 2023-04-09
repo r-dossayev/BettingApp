@@ -5,13 +5,11 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, FormView
-from rest_framework import generics, authentication, permissions
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
+from rest_framework import generics, viewsets
+from rest_framework.permissions import AllowAny
 from oneXbet.forms import *
 from oneXbet.models import League, Game, MyAppUser, Club
-from oneXbet.serializers import LeagueSerializer
+from oneXbet.serializers import LeagueSerializer, ClubSerializer, RegisterSerializer
 
 
 def handler404(request, exception):
@@ -145,12 +143,47 @@ class ContactFormView(FormView):
 
 # API controller
 
-class FootballLeaguesAPI(APIView):
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAdminUser]
+class FootballLeaguesViewSet(viewsets.ModelViewSet):
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
 
-    def get(self, request):
-        leagues = League.objects.all()
-        return Response({'leagues': LeagueSerializer(leagues, many=True).data})
-    # queryset = League.objects.all()
-    # serializer_class = LeagueSerializer
+
+class LeagueClubsViewSet(viewsets.ModelViewSet):
+    # queryset = Club.objects.all()
+    # queryset = League.objects.get(pk=2).club_set
+    serializer_class = ClubSerializer
+
+    def get_queryset(self):
+        url = self.kwargs.get('url')
+        # pk = self.kwargs.get('pk',self.kwargs.get('id'))
+        try:
+            return League.objects.get(url=url).club_set
+        except:
+            return League.objects.get(pk=1).club_set
+
+
+class RegisterViewAPI(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+
+
+# @api_view(["POST"])
+# def adminLogin(request):
+#     print("Ssssssssssssssssssssssssssss")
+#     if (request.method == "POST"):
+#         username = request.data["username"]
+#         password = request.data["password"]
+#         print("Ssssssssssssssssssssssssssss")
+#         authenticated_user = authenticate(request, username=username, password=password)
+#         print("Ssssssssssssssssssssssssssss")
+#         if authenticated_user != None:
+#
+#             if (authenticated_user.is_authenticated and authenticated_user.is_superuser):
+#                 login(request, authenticated_user)
+#                 return Response({"Message": "User is Authenticated. "})
+#             else:
+#                 return Response({"message": "User is not authenticated. "})
+#         else:
+#             return Response({"Message": "Either User is not registered or password does not match"})
+#     print("Ssssssssssssssssssssssssssss")

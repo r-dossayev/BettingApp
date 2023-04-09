@@ -13,4 +13,5 @@ urlpatterns = [
     path('profile', profileView, name='profile'),
     # path('leagues/<slug:slug>/<slug:club>', league, name="club"),
     path('betting', BettingPage.as_view(), name="bet"),
+
 ]
