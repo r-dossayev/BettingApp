@@ -1,0 +1,27 @@
+  #login {
+            -webkit-perspective: 1000px;
+            -moz-perspective: 1000px;
+            perspective: 1000px;
+            margin-top: 50px;
+            margin-left: 30%;
+        }
+
+        #inner-wrapper  {
+            color: #1d1d1d;
+            font-size: 19px;
+            line-height: 1.7em;
+            font-weight: 300;
+            padding: 50px;
+            background: #fff;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 100px;
+        }
+        .input-group-addon {
+            width: 100px;
+            border-radius: 2px;
+            color: #fff;
+            padding: 5px;
+            background: #083586;
+            border: #1d1d21;
+            border-right-color: rgb(243, 170, 12);
+        }
