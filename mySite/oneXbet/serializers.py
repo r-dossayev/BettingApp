@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
@@ -22,15 +23,16 @@ class ClubSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
-    password1 = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
+    password1 = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True,
+                                      validators=[validate_password])
+    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
 
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2', 'email')
 
     def validate(self, attrs):
-        if attrs['password1'] != attrs['password2']:
+        if attrs.get('password1') != attrs.get('password2'):
             raise serializers.ValidationError({"password": "Password fields didn't match."})
 
         return attrs
@@ -47,3 +49,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         myNewUser.user = user
         myNewUser.save()
         return user
+
+
+class AuthMeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyAppUser
+        fields = "__all__"

@@ -19,7 +19,6 @@ interface fetchUserError {
 
 interface fetchUser {
     type: actionType.FETCH_USER
-    payload: {}
 }
 
 interface fetchUserSuccess {

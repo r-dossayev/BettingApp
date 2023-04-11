@@ -1,15 +1,22 @@
+import json
+
 from django.contrib import messages
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, FormView
 from rest_framework import generics, viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from oneXbet.forms import *
 from oneXbet.models import League, Game, MyAppUser, Club
-from oneXbet.serializers import LeagueSerializer, ClubSerializer, RegisterSerializer
+from oneXbet.serializers import LeagueSerializer, ClubSerializer, RegisterSerializer, AuthMeSerializer
 
 
 def handler404(request, exception):
@@ -168,22 +175,58 @@ class RegisterViewAPI(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-# @api_view(["POST"])
-# def adminLogin(request):
-#     print("Ssssssssssssssssssssssssssss")
-#     if (request.method == "POST"):
-#         username = request.data["username"]
-#         password = request.data["password"]
-#         print("Ssssssssssssssssssssssssssss")
-#         authenticated_user = authenticate(request, username=username, password=password)
-#         print("Ssssssssssssssssssssssssssss")
-#         if authenticated_user != None:
+@api_view(["POST"])
+def adminLogin(request):
+    if request.method == "POST":
+        username = request.data.get("username", None)
+        password = request.data.get("password", None)
+        if username and password:
+            authenticated_user = authenticate(request, username=username, password=password)
+            if authenticated_user is not None:
+                if authenticated_user.is_authenticated and authenticated_user.is_superuser:
+                    login(request, authenticated_user)
+                    return Response({"message": "User is successfully Authenticated. "})
+                else:
+                    return Response({"message": "User is not authenticated. "})
+            else:
+                return Response({"message": "Either User is not registered or password does not match"})
+        else:
+            return Response({"message": "not required field"})
+
+
+@api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+def adminLogout(request):
+    print(request.user)
+    logout(request)
+    return Response({"message": "User successfully Logged out"})
+
+
+# class AuthMe(generics.RetrieveAPIView):
+#     # queryset = MyAppUser.objects.all()
+#     # permission_classes = (IsAuthenticated,)
+#     serializer_class = AuthMeSerializer
 #
-#             if (authenticated_user.is_authenticated and authenticated_user.is_superuser):
-#                 login(request, authenticated_user)
-#                 return Response({"Message": "User is Authenticated. "})
-#             else:
-#                 return Response({"message": "User is not authenticated. "})
-#         else:
-#             return Response({"Message": "Either User is not registered or password does not match"})
-#     print("Ssssssssssssssssssssssssssss")
+#     def get_queryset(self):
+#         print(self.request.user)
+#         # s = MyAppUser.objects.all()
+#         s = User.objects.filter(pk=self.request.user.pk).all()
+#         return s.values()
+
+
+class AuthMe(APIView):
+    permission_classes(IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        # a = dict(
+        #     list(MyAppUser.objects.filter(user_id=self.request.user.pk).values()
+        #          + User.objects.get(pk=request.user.pk).)
+        # json.dumps
+        # print(MyAppUser.objects.get(user_id=self.request.user.pk))
+        # b = MyAppUser.objects.get(user_id=self.request.user.pk)
+        currentUser = list(MyAppUser.objects.filter(user_id=self.request.user.pk).values())
+        currentUser[0]["email"] = self.request.user.email
+        currentUser[0]["username"] = self.request.user.username
+        del currentUser[0]["id"]
+        return Response({"user": currentUser[0]})
