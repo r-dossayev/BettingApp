@@ -1,22 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import {useDispatch} from "react-redux";
-import {fetchUser} from "./store/actionCreators/user";
-import {useTypedSelector} from "./hooks/useTypedSelector";
+import React from 'react';
+import Navbar from "./components/Navbar/Navbar";
+import {Route, Routes} from "react-router-dom";
+import Register from "./components/Register";
+import LeagueList from "./components/LeagueList";
+import Login from "./components/Login";
+import Home from "./components/Home";
 
 function App() {
-    const {user} = useTypedSelector(state1 => state1.authUser)
-    const dispatch = useDispatch()
-    // @ts-ignore
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(fetchUser())
-    }, [])
+
 
     return (
-        <div className="App">
-            {user?.map((u:any )=> <div key={u.id}><img src={u.poster} alt=""/> {u.name}</div>)}
+        <div>
+            <Navbar/>
+            <Routes>
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/login'} element={<Login/>}/>
+                <Route path={'/register'} element={<Register/>}/>
+                <Route path={'/leagues'} element={<LeagueList/>}/>
+                {/*<Route path={'/leagues/:id'} element={<LeagueList/>}/>*/}
+            </Routes>
         </div>
+
     );
 }
 

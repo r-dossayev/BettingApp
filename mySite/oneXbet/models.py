@@ -62,6 +62,9 @@ class Club(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        get_latest_by = "point"
+        ordering = ["point"]
     # def get_absolute_url(self):
     #     return reverse('myurl', kwargs={'id': self.id, 'name': self.name})
 

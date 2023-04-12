@@ -14,7 +14,7 @@ export const userReducer = (state = initialState, action: UserAction): userType 
         case actionType.FETCH_USER_SUCCESS:
             return {isAuth: false, error: null, user: action.payload}
         case actionType.FETCH_USER_ERROR:
-            return {isAuth: false, error: action.payload, user: action.payload}
+            return {isAuth: false, error: action.payload, user: null}
         default:
             return state
     }
