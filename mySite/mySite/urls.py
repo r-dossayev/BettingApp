@@ -18,9 +18,8 @@ urlpatterns = [
     path('api/alpha/leagues/', FootballLeaguesViewSet.as_view({'get': 'list'})),
     path('api/alpha/leagues/<int:pk>/', FootballLeaguesViewSet.as_view({'put': 'update', 'get': 'retrieve'})),
     path('api/alpha/leagues/<int:pk>/clubs/', LeagueClubsViewSet.as_view({'get': 'list'})),
-    path('api/alpha/leagues/<slug:url>/clubs/<int:pk>/',  # one club in league get and put
+    path('api/alpha/leagues/<int:id>/clubs/<int:pk>/',  # one club in league get and put
          LeagueClubsViewSet.as_view({'put': 'update', 'get': 'retrieve'})),
-
     path('', index)
 ]
 handler404 = handler404

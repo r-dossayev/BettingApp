@@ -161,10 +161,10 @@ class LeagueClubsViewSet(viewsets.ModelViewSet):
     serializer_class = ClubSerializer
 
     def get_queryset(self):
-        url = self.kwargs.get('url')
-        # pk = self.kwargs.get('pk',self.kwargs.get('id'))
+        # url = self.kwargs.get('url')
+        pk = self.kwargs.get('pk', self.kwargs.get('id'))
         try:
-            return League.objects.get(url=url).club_set
+            return League.objects.get(pk= pk).club_set
         except:
             return League.objects.get(pk=1).club_set
 

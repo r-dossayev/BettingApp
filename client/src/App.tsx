@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import LeagueList from "./components/LeagueList";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import LeagueClubs from "./components/LeagueClubs";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/register'} element={<Register/>}/>
                 <Route path={'/leagues'} element={<LeagueList/>}/>
-                {/*<Route path={'/leagues/:id'} element={<LeagueList/>}/>*/}
+                <Route path={'/leagues/:id'} element={<LeagueClubs/>}/>
             </Routes>
         </div>
 

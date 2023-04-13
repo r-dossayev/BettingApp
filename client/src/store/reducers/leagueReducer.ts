@@ -2,7 +2,7 @@ import {LGActionType, LeaguesActionType, leagueType} from "../types/leagueType";
 
 
 const initialState: leagueType = {
-    loading: true,
+    loading: false,
     leagues: null,
     error: null,
 
