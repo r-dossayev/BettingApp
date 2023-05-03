@@ -1,5 +1,3 @@
-import json
-
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,15 +6,15 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView, FormView
 from rest_framework import generics, viewsets
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from oneXbet.forms import *
 from oneXbet.models import League, Game, MyAppUser, Club
-from oneXbet.serializers import LeagueSerializer, ClubSerializer, RegisterSerializer, AuthMeSerializer
+from oneXbet.serializers import LeagueSerializer, ClubSerializer, RegisterSerializer, MyUserSerializer
 
 
 def handler404(request, exception):
@@ -37,7 +35,8 @@ def football(request):
 
 
 def league(request, slug):
-    context = {'league': League.objects.get(url=slug)}
+    context = {'league': League.objects.get(url=slug),
+               "myclubs": Club.objects.filter(league__url=slug).order_by("-point").all()}
     return render(request, 'oneXbet/football/table.html', context)  # default table html
 
 
@@ -164,7 +163,7 @@ class LeagueClubsViewSet(viewsets.ModelViewSet):
         # url = self.kwargs.get('url')
         pk = self.kwargs.get('pk', self.kwargs.get('id'))
         try:
-            return League.objects.get(pk= pk).club_set
+            return League.objects.get(pk=pk).club_set
         except:
             return League.objects.get(pk=1).club_set
 
@@ -230,3 +229,15 @@ class AuthMe(APIView):
         currentUser[0]["username"] = self.request.user.username
         del currentUser[0]["id"]
         return Response({"user": currentUser[0]})
+
+
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = MyUserSerializer
+    pagination_class = LargeResultsSetPagination

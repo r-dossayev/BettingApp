@@ -13,9 +13,9 @@
                 </thead>
                 <tbody>
 
-                {% for foo in league.club_set.all %}
+                {% for foo in myclubs %}
                     <tr>
-                        <th scope="row">{{ foo.pk }}</th>
+                        <th scope="row">{{ forloop.counter }}</th>
                         <td><img src="{{ foo.poster.url }}" width="50" height="50" alt="...">  {{ foo.name }}</td>
                         <td>{{ foo.wins }}</td>
                         <td>{{ foo.draws }}</td>
